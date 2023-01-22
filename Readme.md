@@ -42,4 +42,6 @@ Then, train 5 models with the full dataset
 
 For reference, one model take about a day to converge using a RTX A5000 GPU.
 
-To plot the results...
+To get the results of model ensembles, run 
+
+    python summary.py
