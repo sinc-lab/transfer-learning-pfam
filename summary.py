@@ -8,7 +8,7 @@ from tlprotcnn import TLProtCNN
 
 TEST_PATH = "data/Clustered_data/test/"
 CACHE_PATH = "data/"
-BATCH_SIZE = 128
+BATCH_SIZE = 32
 DEVICE = "cuda"
 categories = [item.strip() for item in open("data/categories.txt")]
 
