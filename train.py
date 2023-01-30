@@ -12,7 +12,6 @@ from tlprotcnn import TLProtCNN
 parser = argparse.ArgumentParser()
 parser.add_argument("--train", default=f"data/Clustered_data/dev/")
 parser.add_argument("--dev", default=f"data/Clustered_data/dev/")
-parser.add_argument("--test", default=f"data/Clustered_data/test/")
 parser.add_argument("--cache", default="data/")
 parser.add_argument("-n", type=int, default=1)
 
@@ -34,9 +33,6 @@ train_loader = DataLoader(train_data, batch_sampler=BatchSampler(train_data.get_
 dev_data = ProtDataset(args.dev, categories, cache_path=args.cache)
 
 dev_loader = DataLoader(dev_data, batch_size=BATCH_SIZE, collate_fn=pad_batch, num_workers=WORKERS)
-
-test_data = ProtDataset(args.test, categories, cache_path=args.cache)
-test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, collate_fn=pad_batch, num_workers=WORKERS)
 
 # Train N models
 for nrepeat in range(args.n):
@@ -63,8 +59,3 @@ for nrepeat in range(args.n):
             if counter > PATIENCE:
                 break
         print(f"{epoch}: train loss {train_loss:.3f}, dev loss {dev_loss:.3f}, dev err {dev_err:.3f}")
-
-    net = TLProtCNN(len(categories), lr=LR, device=DEVICE) 
-    net.load_state_dict(tr.load(f"{OUT_DIR}weights.pk"))
-    test_loss, test_errate, _, _, _ = net.pred(test_loader)
-    print(f"test_loss {test_loss:.2f} test_errate {test_errate:.2f}")

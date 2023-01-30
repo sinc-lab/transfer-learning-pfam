@@ -18,7 +18,7 @@ models = [f"{d}/weights.pk" for d in os.listdir("./") if "results_" in d]
 test_data = ProtDataset(TEST_PATH, categories, CACHE_PATH)
 test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, collate_fn=pad_batch)
 
-# run predictions for each model, and get averaged prediction
+# run predictions for each model on the folder, and get the ensembled prediction
 pred_avg = tr.zeros((len(test_data), len(categories)))
 for k, model in enumerate(models):
     print("load weights from", model)
